@@ -6,7 +6,7 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 15:00:36 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/17 18:30:11 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/03/17 18:51:26 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,43 +40,41 @@ static t_env	*init_env(void)
 static void		parsing(int ac, char *av, t_env *env)
 {
 	int		fd;
-	char	*buf;
+	char	*line;
 
 	if ((fd = open(av, O_RDONLY))== -1)
 		error_errno(av, strerror(errno));
 	ft_putendl("start parsing");
-	buf = ft_strnew(SIZE);
-	if (read(fd, buf, SIZE) != -1)
+	while (get_next_line(fd, &line))
 	{
-		ft_putendl("read ok");
-		ft_putendl(buf);
+		ft_putendl("getting line...");
+		// add node
+		ft_putendl(line);
 	}
-	else
-		ft_putendl("cant read file");
-	close(fd);
+	//close(fd);
 }
 
 int				main(int ac, char **av)
 {
-	int x;
-	int y;
+	int		x;
+	int		y;
 	t_env	*env;
 
 	if (ac != 2)
 		error_av("usage: ./fdf file1");
 	env = init_env();
 	parsing(ac, av[1], env);
-//	y = 50;
-//	while (y < 150)
-//	{
-//		x = 50;
-//		while (x < 150)
-//		{
-//			mlx_pixel_put(env->mlx, env->win, x, y, 0x000FFFFF);
-//			x++;
-//		}
-//		y++;
-//	}
+	y = 50;
+	while (y < 150)
+	{
+		x = 50;
+		while (x < 150)
+		{
+			mlx_pixel_put(env->mlx, env->win, x, y, 0x000FFFFF);
+			x++;
+		}
+		y++;
+	}
 	mlx_loop(env->mlx);
 	return (0);
 }
