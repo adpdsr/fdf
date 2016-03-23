@@ -6,7 +6,7 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 15:00:36 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/22 17:33:09 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/03/23 18:57:18 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ t_map		*parsing(int ac, char *av, t_env *env)
 	char	**split;
 	t_map	*map;
 
-	i = 0;
 	split = NULL;
 	map = init_map();
 	if ((env->fd = open(av, O_RDONLY)) == -1)
@@ -57,22 +56,24 @@ t_map		*parsing(int ac, char *av, t_env *env)
 	while (get_next_line(env->fd, &line) == 1)
 	{
 		split = ft_strsplit_ws(line);
+		//ft_strdel(&line);
 		check_line(split);
 		if (map->x == 0)
 			map->x = ft_tablen(split);
 		else if (map->x != 0)
 			if (map->x != ft_tablen(split))
 				e_map(ft_tablen(split), ": all lines must have same lenght\n", map->y, 2);
-		ft_freetab(split);
+		//ft_freetab(split);
 		map->y++;
 	}
+	close(env->fd);
 	if (split == NULL)
 	{
-		ft_putstr(av);
+		ft_putstr_fd(av, 2);
 		ft_putendl_fd(": file is empty", 2);
 		exit(1);
 	}
-	close(fd);
+	i = 0;
 	if ((env->fd = open(av, O_RDONLY)) == -1)
 		exit(1);
 	if (!(map->map = (int **)malloc(sizeof(int *) * (map->y))))
@@ -80,10 +81,11 @@ t_map		*parsing(int ac, char *av, t_env *env)
 	while (get_next_line(env->fd, &line) > 0)
 	{
 		split = ft_strsplit_ws(line);
+		// ft_strdel(&line);
 		build_map(map, split, i);
 		ft_freetab(split);
 		i++;
 	}
-	close(fd);
+	close(env->fd);
 	return (map);
 }
