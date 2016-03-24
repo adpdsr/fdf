@@ -6,7 +6,7 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 15:21:30 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/23 18:57:16 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/03/24 17:39:18 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct	s_map
 	int			**map;
 	int			x; // largeur
 	int			y; // hauteur
+	float		x_range;
+	float		y_range;
 }				t_map;
 
 void	e_param(int ac, char **env);
