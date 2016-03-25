@@ -6,7 +6,7 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 15:00:36 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/24 17:39:16 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/03/25 12:33:51 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,14 +109,47 @@ static t_pts	**convert_map(t_map *map, t_pts **point, t_env *env)
 	return (map->point);
 }
 
+static void		draw_line_h(t_env *env, t_map *map, int i, int j)
+{
+	float	x1;
+	float	y1;
+	float	x2;
+	float	y2;
+	float	coef_dir;
+	float	move_x;
+	float	move_y;	
+
+	x1 = map->point[i][j].X;
+	y1 = map->point[i][j].Y;
+	x2 = map->point[i][j + 1].X;
+	y2 = map->point[i][j + 1].Y;
+	coef_dir = (y2 - y1) / (x2 - x1);
+	printf("x1 = |%f|\ny1 = |%f|\n", x1, y1);
+	printf("x2 = |%f|\ny2 = |%f|\n", x2, y2);
+	printf("coeff dir = |%f|\n", coef_dir);
+	while (y1 != y2)
+	{
+		//ft_putendl("moving down");
+		move_y = (y1 > y2) ? -1 : 1;
+		while (x1 != x2)
+		{
+			if (x1 !== x2)
+				break;
+			printf("moving right : x1 = |%f|\nx2 = |%f|\nmove = |%f|\n", x1, x2, move_x);
+			move_x = (x1 > x2) ? -0.1 : 0.1;
+			mlx_pixel_put(env->mlx, env->win, map->x_offset + (map->coef * map->point[i][j].X), map->y_offset + (map->coef * map->point[i][j].Y), 0x000FFFFF);
+			x1 += move_x;
+		}
+		y1 += move_y;
+	}
+}
+
 static void		put_map(t_env *env, t_map *map)
 {
 	int		i;
 	int		j;
 	float	x_img;
 	float	y_img;
-	float	x_offset;
-	float	y_offset;
 	float	coef_x;
 	float	coef_y;
 
@@ -125,10 +158,12 @@ static void		put_map(t_env *env, t_map *map)
 	printf("x_range = |%f|\n", map->x_range);
 	printf("y_range = |%f|\n", map->y_range);
 
-	//coef_x = env->x_win / ((map->x_max - map->x_min));
-	//coef_y = env->y_win / ((map->y_max - map->y_min));
-	coef_x = env->x_win / (map->x_range * 1.2);
-	coef_y = env->y_win / (map->y_range * 1.2);
+	//coef_x = env->x_win / (map->x * 4);
+	coef_x = env->x_win / (map->x_range * 2);
+	coef_y = env->x_win / (map->y_range * 2);
+	map->coef = (coef_x < coef_y) ? coef_x : coef_y;
+	//coef_x = env->x_win / (map->x_range * 1.2);
+	//coef_y = env->y_win / (map->y * 4);
 	printf("coef_x = |%f|\n", coef_x);
 	printf("coef_y = |%f|\n", coef_y);
 
@@ -140,21 +175,31 @@ static void		put_map(t_env *env, t_map *map)
 	printf("y_img = |%f|\n", y_img);
 
 	//x_offset = (env->x_win - x_img);
-	x_offset = (env->x_win - map->x_range) / 2;
-	y_offset = (env->y_win - map->y_range);
-	printf("x_offset = |%f|\n", x_offset);
-	printf("y_offset = |%f|\n", y_offset);
+	map->x_offset = env->x_win / 2;
+	map->y_offset = (map->y_range * coef_y);
+	printf("x_offset = |%f|\n", map->x_offset);
+	printf("y_offset = |%f|\n", map->y_offset);
 
 	i = -1;
 	while (++i < map->y)
 	{
 		j = -1;
 		while (++j < map->x)
-			mlx_pixel_put(env->mlx, env->win, x_offset + (coef_x * map->point[i][j].X), y_offset + (coef_x * map->point[i][j].Y), 0x000FFFFF);
+		{
+			draw_line_h(env, map, i, j);
+		//	if (point[x][y + 1])
+		//	{
+		//		draw_line_h(env, map, x, y);
+		//	}
+		//	if (point[x + 1][y])
+		//	{
+		//		draw_line_v(point[x][y], point[x + 1][y]);
+		//	}
+		}
 	}
 }
 
-static void		build_map(t_env *env, t_map *map)
+static void		do_map(t_env *env, t_map *map)
 {
 	env->mlx = mlx_init();
 	env->win = mlx_new_window(env->mlx, env->x_win, env->y_win, "| Fdf |");
@@ -178,9 +223,9 @@ int				main(int ac, char **av, char **environ)
 	t_env	*env;
 
 	e_param(ac, environ);			// check if ac = 2 and if env exist
-	env = init_env();				// init fd et malloc
-	map = parsing(ac, av[1], env);	// parsing
+	env = init_env(av[1]);			// init fd et malloc
+	map = parsing(av[1], env);		// parsing
 	print_map(map);					// test
-	build_map(env, map);
+	do_map(env, map);
 	return (0);
 }

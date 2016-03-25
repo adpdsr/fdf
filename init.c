@@ -6,19 +6,20 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:29:32 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/24 15:34:15 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/03/25 12:33:54 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_env	*init_env(void)
+t_env	*init_env(char *av) // static dans main.c
 {
 	t_env	*env;
 
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
-		return (NULL);
-	env->fd = -1;
+		exit(1); // ft exit malloc
+	if ((env->fd = open(av, O_RDONLY)) == -1)
+		exit(1); // error open
 	env->y_win = 800;
 	env->x_win = 1200;
 	return (env);
