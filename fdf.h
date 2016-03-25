@@ -6,7 +6,7 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 15:21:30 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/25 12:33:53 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/03/25 16:41:57 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdio.h> // debug
 
 #include <mlx.h>
+#include <math.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <stdlib.h>

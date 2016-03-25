@@ -6,7 +6,7 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 15:00:36 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/25 12:33:51 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/03/25 16:41:54 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,40 +108,73 @@ static t_pts	**convert_map(t_map *map, t_pts **point, t_env *env)
 	map->y_range = y_max - y_min;
 	return (map->point);
 }
-
+/*
 static void		draw_line_h(t_env *env, t_map *map, int i, int j)
 {
 	float	x1;
 	float	y1;
 	float	x2;
 	float	y2;
-	float	coef_dir;
-	float	move_x;
-	float	move_y;	
+	float	dx;
+	float	dy;
+	float	x;
+	float	y;
+	double	nb;
 
+	nb = 0.0;
 	x1 = map->point[i][j].X;
 	y1 = map->point[i][j].Y;
 	x2 = map->point[i][j + 1].X;
 	y2 = map->point[i][j + 1].Y;
-	coef_dir = (y2 - y1) / (x2 - x1);
+	dx = (x2 - x1);
+	dy = (y2 - y1);
 	printf("x1 = |%f|\ny1 = |%f|\n", x1, y1);
 	printf("x2 = |%f|\ny2 = |%f|\n", x2, y2);
-	printf("coeff dir = |%f|\n", coef_dir);
-	while (y1 != y2)
+	while (nb <= 1)
 	{
-		//ft_putendl("moving down");
-		move_y = (y1 > y2) ? -1 : 1;
-		while (x1 != x2)
-		{
-			if (x1 !== x2)
-				break;
-			printf("moving right : x1 = |%f|\nx2 = |%f|\nmove = |%f|\n", x1, x2, move_x);
-			move_x = (x1 > x2) ? -0.1 : 0.1;
-			mlx_pixel_put(env->mlx, env->win, map->x_offset + (map->coef * map->point[i][j].X), map->y_offset + (map->coef * map->point[i][j].Y), 0x000FFFFF);
-			x1 += move_x;
-		}
-		y1 += move_y;
+		x = x1 + dx * nb;
+		y = y1 + dy * nb;
+		mlx_pixel_put(env->mlx, env->win, map->x_offset + (map->coef * x), map->y_offset + (map->coef * y), 0x000FFFFF);
+		nb += 1.0 / sqrt((dx * dx) + (dy * dy));
 	}
+
+//	while (y1 != y2)
+//	{
+//		//ft_putendl("moving down");
+//		move_y = (y1 > y2) ? -1 : 1;
+//		while (x1 != x2)
+//		{
+			//if (x1 != x2)
+			//	break;
+			//move_x = (x1 > x2) ? -0.1 : 0.1;
+			//mlx_pixel_put(env->mlx, env->win, map->x_offset + (map->coef * map->point[i][j].X), map->y_offset + (map->coef * map->point[i][j].Y), 0x000FFFFF);
+			//x1 += move_x;
+//			x1 = x1;
+//		}
+//		y1 += move_y;
+//	}
+}
+*/
+
+static void		draw_segment(t_env *env, t_map *map, float x0, float y0, float dx, float dy)
+{
+	int		i;
+	int		x;
+	int		y;
+	float	m;
+
+	i = 0;
+	m = dy / dx;
+	printf("i = |%d|\ndx = |%f|\n", i, dx);
+	while ((i * 10) < -(dx * 10))
+	{
+		ft_putendl("put pixel");
+		x = x0 + i;
+		y = round(y0 + m * i);
+		mlx_pixel_put(env->mlx, env->win, map->x_offset + (map->coef * x), map->y_offset + (map->coef * y), 0x000FFFFF);
+		i++;
+	}
+	printf("m = |%f|\n", m);
 }
 
 static void		put_map(t_env *env, t_map *map)
@@ -164,8 +197,7 @@ static void		put_map(t_env *env, t_map *map)
 	map->coef = (coef_x < coef_y) ? coef_x : coef_y;
 	//coef_x = env->x_win / (map->x_range * 1.2);
 	//coef_y = env->y_win / (map->y * 4);
-	printf("coef_x = |%f|\n", coef_x);
-	printf("coef_y = |%f|\n", coef_y);
+	printf("coef = |%f|\n", map->coef);
 
 	//x_img = (coef_x * (map->x_range)) / 2;
 	//y_img = (coef_x * (map->y_range)) / 2;
@@ -186,15 +218,8 @@ static void		put_map(t_env *env, t_map *map)
 		j = -1;
 		while (++j < map->x)
 		{
-			draw_line_h(env, map, i, j);
-		//	if (point[x][y + 1])
-		//	{
-		//		draw_line_h(env, map, x, y);
-		//	}
-		//	if (point[x + 1][y])
-		//	{
-		//		draw_line_v(point[x][y], point[x + 1][y]);
-		//	}
+			if (j + 1 < map->x)
+				draw_segment(env, map, map->point[i][j].X, map->point[i][j].Y, map->point[i][j + 1].X - map->point[i][j].X, map->point[i][j + 1].Y - map->point[i][j].Y);
 		}
 	}
 }
