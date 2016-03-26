@@ -6,7 +6,7 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 15:21:30 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/25 16:41:57 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/03/26 14:11:21 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #include <stdlib.h>
 #include "libft/libft.h"
 
+#define BASE_COLOR 0x00FFFFFF
+
 typedef struct	s_env
 {
 	int			fd;
@@ -30,6 +32,8 @@ typedef struct	s_env
 	void		*img;
 	int			x_win;
 	int			y_win;
+	double		x;
+	double		y;
 }				t_env;
 
 typedef struct	s_pts
@@ -49,9 +53,17 @@ typedef struct	s_map
 	int			y; // nb ligne
 	float		x_range; // != entre min X et max X
 	float		y_range; // != entre min Y et max Y
-	float		coef;	 // distance entre 2 pixel
-	float		x_offset;
-	float		y_offset;
+//	float		coef;	 // distance entre 2 pixel
+//	float		x_offset;
+//	float		y_offset;
+	float		x1;
+	float		x2;
+	float		y1;
+	float		y2;
+	float		z1;
+	float		z2;
+	float		dx;
+	float		dy;
 }				t_map;
 
 void	e_param(int ac, char **env);

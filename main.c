@@ -6,7 +6,7 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 15:00:36 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/25 16:41:54 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/03/26 14:11:18 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static t_pts	get_coord(int map, int x, int y)
 	point.z_pts = map;
 	point.X = (cst1 * point.x_pts) - (cst2 * point.y_pts); // projection iso
 	point.Y = point.z_pts + ((cst1 / 2) * point.x_pts) + ((cst2 / 2) * point.y_pts); // projection iso
-//	point.X *= -1;
+	//	point.X *= -1;
 	point.Y *= -1;
 	//	point.X = point.x_pts + (cst1 * point.z_pts); // projection //
 	//	point.Y = point.y_pts + ((cst1 / 2) * point.z_pts); // projection //
@@ -109,34 +109,34 @@ static t_pts	**convert_map(t_map *map, t_pts **point, t_env *env)
 	return (map->point);
 }
 /*
-static void		draw_line_h(t_env *env, t_map *map, int i, int j)
-{
-	float	x1;
-	float	y1;
-	float	x2;
-	float	y2;
-	float	dx;
-	float	dy;
-	float	x;
-	float	y;
-	double	nb;
+   static void		draw_line_h(t_env *env, t_map *map, int i, int j)
+   {
+   double	x1;
+   float	y1;
+   float	x2;
+   float	y2;
+   float	dx;
+   float	dy;
+   float	x;
+   float	y;
+   double	nb;
 
-	nb = 0.0;
-	x1 = map->point[i][j].X;
-	y1 = map->point[i][j].Y;
-	x2 = map->point[i][j + 1].X;
-	y2 = map->point[i][j + 1].Y;
-	dx = (x2 - x1);
-	dy = (y2 - y1);
-	printf("x1 = |%f|\ny1 = |%f|\n", x1, y1);
-	printf("x2 = |%f|\ny2 = |%f|\n", x2, y2);
-	while (nb <= 1)
-	{
-		x = x1 + dx * nb;
-		y = y1 + dy * nb;
-		mlx_pixel_put(env->mlx, env->win, map->x_offset + (map->coef * x), map->y_offset + (map->coef * y), 0x000FFFFF);
-		nb += 1.0 / sqrt((dx * dx) + (dy * dy));
-	}
+   nb = 0.0;
+   x1 = map->point[i][j].X;
+   y1 = map->point[i][j].Y;
+   x2 = map->point[i][j + 1].X;
+   y2 = map->point[i][j + 1].Y;
+   dx = (x2 - x1);
+   dy = (y2 - y1);
+   printf("x1 = |%f|\ny1 = |%f|\n", x1, y1);
+   printf("x2 = |%f|\ny2 = |%f|\n", x2, y2);
+   while (nb <= 1)
+   {
+   x = x1 + dx * nb;
+   y = y1 + dy * nb;
+   mlx_pixel_put(env->mlx, env->win, map->x_offset + (map->coef * x), map->y_offset + (map->coef * y), 0x000FFFFF);
+   nb += 1.0 / sqrt((dx * dx) + (dy * dy));
+   }
 
 //	while (y1 != y2)
 //	{
@@ -144,82 +144,153 @@ static void		draw_line_h(t_env *env, t_map *map, int i, int j)
 //		move_y = (y1 > y2) ? -1 : 1;
 //		while (x1 != x2)
 //		{
-			//if (x1 != x2)
-			//	break;
-			//move_x = (x1 > x2) ? -0.1 : 0.1;
-			//mlx_pixel_put(env->mlx, env->win, map->x_offset + (map->coef * map->point[i][j].X), map->y_offset + (map->coef * map->point[i][j].Y), 0x000FFFFF);
-			//x1 += move_x;
+//if (x1 != x2)
+//	break;
+//move_x = (x1 > x2) ? -0.1 : 0.1;
+//mlx_pixel_put(env->mlx, env->win, map->x_offset + (map->coef * map->point[i][j].X), map->y_offset + (map->coef * map->point[i][j].Y), 0x000FFFFF);
+//x1 += move_x;
 //			x1 = x1;
 //		}
 //		y1 += move_y;
 //	}
 }
 */
+/*
+   static void		draw_segment(t_env *env, t_map *map, float x0, float y0, float dx, float dy)
+   {
+   int		i;
+   int		x;
+   int		y;
+   float	m;
 
-static void		draw_segment(t_env *env, t_map *map, float x0, float y0, float dx, float dy)
+   i = 0;
+   m = dy / dx;
+   printf("i = |%d|\ndx = |%f|\n", i, dx);
+   while ((i * 10) < -(dx * 10))
+   {
+   ft_putendl("put pixel");
+   x = x0 + i;
+   y = round(y0 + m * i);
+   mlx_pixel_put(env->mlx, env->win, map->x_offset + (map->coef * x), map->y_offset + (map->coef * y), 0x000FFFFF);
+   i++;
+   }
+   printf("m = |%f|\n", m);
+   }
+   */
+/*static void		put_map(t_env *env, t_map *map)
+  {
+  int		i;
+  int		j;
+  float	x_img;
+  float	y_img;
+  float	coef_x;
+  float	coef_y;
+
+  printf("map->x = |%d|\n", map->x);
+  printf("map->y = |%d|\n", map->y);
+  printf("x_range = |%f|\n", map->x_range);
+  printf("y_range = |%f|\n", map->y_range);
+
+//coef_x = env->x_win / (map->x * 4);
+coef_x = env->x_win / (map->x_range * 2);
+coef_y = env->x_win / (map->y_range * 2);
+map->coef = (coef_x < coef_y) ? coef_x : coef_y;
+//coef_x = env->x_win / (map->x_range * 1.2);
+//coef_y = env->y_win / (map->y * 4);
+printf("coef = |%f|\n", map->coef);
+
+//x_img = (coef_x * (map->x_range)) / 2;
+//y_img = (coef_x * (map->y_range)) / 2;
+x_img = coef_x * map->x_range;
+y_img = coef_x * map->y_range;
+printf("x_img = |%f|\n", x_img);
+printf("y_img = |%f|\n", y_img);
+
+//x_offset = (env->x_win - x_img);
+map->x_offset = env->x_win / 2;
+map->y_offset = (map->y_range * coef_y);
+printf("x_offset = |%f|\n", map->x_offset);
+printf("y_offset = |%f|\n", map->y_offset);
+
+i = -1;
+while (++i < map->y)
 {
-	int		i;
-	int		x;
-	int		y;
-	float	m;
+j = -1;
+while (++j < map->x)
+{
+if (j + 1 < map->x)
+//draw_segment(env, map, map->point[i][j].X, map->point[i][j].Y, map->point[i][j + 1].X - map->point[i][j].X, map->point[i][j + 1].Y - map->point[i][j].Y);
+}
+}
+}*/
 
-	i = 0;
-	m = dy / dx;
-	printf("i = |%d|\ndx = |%f|\n", i, dx);
-	while ((i * 10) < -(dx * 10))
+static void		draw_seg(t_env *env, t_map *map)
+{
+	double	factor;
+
+	factor = 0.0;
+	map->dx = (map->x2 - map->x1);
+	map->dy = (map->y2 - map->y1);
+	while (factor <= 1)
 	{
-		ft_putendl("put pixel");
-		x = x0 + i;
-		y = round(y0 + m * i);
-		mlx_pixel_put(env->mlx, env->win, map->x_offset + (map->coef * x), map->y_offset + (map->coef * y), 0x000FFFFF);
-		i++;
+		env->x = map->x1 + map->dx * factor;
+		env->y = map->y1 + map->dy * factor;
+		mlx_pixel_put(env->mlx, env->win, env->x, env->y, BASE_COLOR);
+		factor += 1. / sqrt((map->dx * map->dx) + (map->dy * map->dy));
 	}
-	printf("m = |%f|\n", m);
+}
+
+static void		convert_iso(t_map *map)
+{
+	double x1;
+	double x2;
+	double y1;
+	double y2;
+
+	x1 = map->x1;
+	y1 = map->y1;
+	x2 = map->x2;
+	y2 = map->y2;
+	map->x1 = x1 + y1;
+	map->x2 = x2 + y2;
+	map->y1 = (y1 * 1. / 2.) - (1. / 2. * (x1 + map->z1));
+	map->y2 = (y2 * 1. / 2.) - (1. / 2. * (x2 + map->z2));
+}
+
+static void		draw_line_h(t_env *env, t_map *map, int i, int j)
+{
+	double x1;
+	double x2;
+	double y1;
+	double y2;
+
+	x1 = 0 + i * 5;
+	x2 = 0 + (i + 1) * 5;
+	y1 = 400;
+	y2 = 400;
+	map->x1 = x1;
+	map->y1 = y1 + j * 5;
+	map->z1 = (15 * map->map[i][j]);
+	map->x2 = x2;
+	map->y2 = y2 + j * 5;
+	map->z2 = 15 * map->map[i + 1][j];
+	convert_iso(map);
+	draw_seg(env, map);
 }
 
 static void		put_map(t_env *env, t_map *map)
 {
-	int		i;
-	int		j;
-	float	x_img;
-	float	y_img;
-	float	coef_x;
-	float	coef_y;
-
-	printf("map->x = |%d|\n", map->x);
-	printf("map->y = |%d|\n", map->y);
-	printf("x_range = |%f|\n", map->x_range);
-	printf("y_range = |%f|\n", map->y_range);
-
-	//coef_x = env->x_win / (map->x * 4);
-	coef_x = env->x_win / (map->x_range * 2);
-	coef_y = env->x_win / (map->y_range * 2);
-	map->coef = (coef_x < coef_y) ? coef_x : coef_y;
-	//coef_x = env->x_win / (map->x_range * 1.2);
-	//coef_y = env->y_win / (map->y * 4);
-	printf("coef = |%f|\n", map->coef);
-
-	//x_img = (coef_x * (map->x_range)) / 2;
-	//y_img = (coef_x * (map->y_range)) / 2;
-	x_img = coef_x * map->x_range;
-	y_img = coef_x * map->y_range;
-	printf("x_img = |%f|\n", x_img);
-	printf("y_img = |%f|\n", y_img);
-
-	//x_offset = (env->x_win - x_img);
-	map->x_offset = env->x_win / 2;
-	map->y_offset = (map->y_range * coef_y);
-	printf("x_offset = |%f|\n", map->x_offset);
-	printf("y_offset = |%f|\n", map->y_offset);
+	int i;
+	int j;
 
 	i = -1;
-	while (++i < map->y)
+	while (++i < map->y -1)
 	{
 		j = -1;
-		while (++j < map->x)
+		while (++j < map->x -1)
 		{
-			if (j + 1 < map->x)
-				draw_segment(env, map, map->point[i][j].X, map->point[i][j].Y, map->point[i][j + 1].X - map->point[i][j].X, map->point[i][j + 1].Y - map->point[i][j].Y);
+			draw_line_h(env, map, i, j);
+			//draw_line_v(env, map, i, j);
 		}
 	}
 }
@@ -233,10 +304,10 @@ static void		do_map(t_env *env, t_map *map)
 	map->point = (t_pts **)malloc(sizeof(t_pts *) * (map->y));
 	map->point = convert_map(map, map->point, env);
 
-	print_point(map->point, map); // test
+	//print_point(map->point, map); // test
 
 	put_map(env, map);
-
+	//mlx_key_hook();
 	mlx_loop(env->mlx);
 }
 
@@ -247,8 +318,8 @@ int				main(int ac, char **av, char **environ)
 	t_map	*map;
 	t_env	*env;
 
-	e_param(ac, environ);			// check if ac = 2 and if env exist
-	env = init_env(av[1]);			// init fd et malloc
+	e_param(ac, environ);
+	env = init_env(av[1]);
 	map = parsing(av[1], env);		// parsing
 	print_map(map);					// test
 	do_map(env, map);
