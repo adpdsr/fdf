@@ -6,15 +6,14 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 15:00:36 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/26 17:32:27 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/03/27 19:20:01 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static int		hook_key(int keycode, t_map *map, t_env *env)
+int			hook_key(int keycode, t_map *map)
 {
-
 	printf("key event = %d\n", keycode);
 	if (keycode == 53 || keycode == 12)
 	{
@@ -23,20 +22,80 @@ static int		hook_key(int keycode, t_map *map, t_env *env)
 	}
 	if (keycode == 69 || keycode == 24)
 	{
-		ft_putendl("zoom in");
 		map->zoom += 1;
+		mlx_clear_window(map->mlx, map->win);
+		put_map(map);
 	}
 	if (keycode == 78 || keycode == 27)
-		ft_putendl("zoom out");
+	{
+		map->zoom -= 1;
+		mlx_clear_window(map->mlx, map->win);
+		put_map(map);
+	}
 	if (keycode == 123)
-		ft_putendl("move left");
+	{
+		map->offset_x -= 10;
+		map->offset_y -= 10;
+		mlx_clear_window(map->mlx, map->win);
+		put_map(map);
+	}
 	if (keycode == 124)
-		ft_putendl("move right");
+	{
+		map->offset_x += 10;
+		map->offset_y += 10;
+		mlx_clear_window(map->mlx, map->win);
+		put_map(map);
+	}
 	if (keycode == 126)
-		ft_putendl("move up");
+	{
+		map->offset_x += 10;
+		map->offset_y -= 10;
+		mlx_clear_window(map->mlx, map->win);
+		put_map(map);
+	}
 	if (keycode == 125)
-		ft_putendl("move down");
-	//put_map(env, map);
+	{
+		map->offset_x -= 10;
+		map->offset_y += 10;
+		mlx_clear_window(map->mlx, map->win);
+		put_map(map);
+	}
+	if (keycode == 116)
+	{
+		map->height += 1;
+		mlx_clear_window(map->mlx, map->win);
+		put_map(map);
+	}
+	if (keycode == 121)
+	{
+		map->height -= 1;
+		mlx_clear_window(map->mlx, map->win);
+		put_map(map);
+	}
+	if (keycode == 83) // a revoir
+	{
+		if (map->factor > 0.2)
+		{
+			map->factor -= 0.1;
+			map->offset_x -= 100;
+			map->offset_y += 100;
+		}
+		printf("factor = |%f|\n", map->factor);
+		mlx_clear_window(map->mlx, map->win);
+		put_map(map);
+	}
+	if (keycode == 84) // a revoir
+	{
+		if (map->factor < 0.8)
+		{
+			map->factor += 0.1;
+			map->offset_x += 100;
+			map->offset_y -= 100;
+		}
+		printf("factor = |%f|\n", map->factor);
+		mlx_clear_window(map->mlx, map->win);
+		put_map(map);
+	}
 	return (0);
 }
 
@@ -44,9 +103,11 @@ void		do_map(t_env *env, t_map *map)
 {
 	env->mlx = mlx_init();
 	env->win = mlx_new_window(env->mlx, env->x_win, env->y_win, "| Fdf |");
+	map->mlx = env->mlx;
+	map->win = env->win;
 	env->img = mlx_new_image(env->mlx, env->x_win, env->y_win);
-	put_map(env, map);
-	mlx_key_hook(env->win, hook_key, 0);
+	put_map(map);
+	mlx_key_hook(env->win, &hook_key, map);
 	mlx_loop(env->mlx);
 }
 
@@ -87,7 +148,6 @@ int				main(int ac, char **av, char **environ)
 	map = parsing(av[1], env);
 //	env->mlx = mlx_init();
 //	env->win = mlx_new_window(env->mlx, env->x_win, env->y_win, "| Fdf |");
-//	env->img = mlx_new_image(env->mlx, env->x_win, env->y_win);
 	do_map(env, map);
 //	mlx_loop(env->mlx);
 	return (0);

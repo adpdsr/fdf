@@ -6,7 +6,7 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 15:00:36 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/26 18:22:02 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/03/27 19:20:03 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,29 @@ static t_map   *init_map(void)
 		exit(1);
 	map->l = 0;
 	map->h = 0;
-	map->zoom = 10; // reinit a la fin de read_map
-	map->height = 10;
-	map->offset_x = 0;
-	map->offset_y = 400;
+	map->zoom = 20; // reinit a la fin de read_map
+	map->height = 3;
+	map->factor = 0.5;
+	map->offset_x = -300;
+	map->offset_y = 500;
 	return (map);
 }
 
 static void		build_map(t_map	*map, char **split, int i)
 {
+	int		k;
 	int		j;
 
-	j = 0-1;
+	j = 0;
+	k = map->l -1;
 	if (!(map->map[i] = (int *)malloc(sizeof(int) * (map->l))))
 		exit(1);
-	while (++j < map->l)
-		map->map[i][j] = ft_atoi(split[j]);
+	while (j < map->l)
+	{
+		map->map[i][k] = ft_atoi(split[j]);
+		k--;
+		j++;
+	}
 }
 
 static void	check_line(char **split)
@@ -81,8 +88,8 @@ static void	read_map(char *av, t_env *env, t_map *map)
 		}
 	}
 	close(env->fd);
-//	map->zoom = env->x_win / (map->l * 4);
-//	printf("map->zoom = |%d|\n", map->zoom);
+	map->zoom = env->x_win / (((map->l + map->h) / 2) * 3);
+	printf("zoom = |%d|\n", map->zoom);
 }
 
 static void	get_map(char *av, t_env *env, t_map *map)
@@ -118,5 +125,7 @@ t_map		*parsing(char *av, t_env *env)
 	map = init_map();
 	read_map(av, env, map);
 	get_map(av, env, map);
+	map->win = env->win;
+	map->mlx = env->mlx;
 	return (map);
 }
