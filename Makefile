@@ -6,40 +6,44 @@
 #    By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/03/28 15:36:47 by adu-pelo          #+#    #+#              #
-#    Updated: 2016/03/28 18:21:34 by adu-pelo         ###   ########.fr        #
+#    Updated: 2016/11/07 16:52:43 by adu-pelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
-SRC = 	src/parsing.c \
-		src/put_map.c \
-		src/do_map.c \
-		src/color.c \
-		src/error.c \
-		src/main.c \
-		src/hook.c
+SRC = 	sources/parsing.c \
+		sources/put_map.c \
+		sources/do_map.c \
+		sources/color.c \
+		sources/error.c \
+		sources/main.c \
+		sources/hook.c
 
-OBJ = $(SRC:.c=.o)
-	FLAGS = -Wall -Wextra -Werror
-	LIBS = -L./libft -lft -lmlx -framework OpenGL -framework AppKit
+OBJ		= $(SRC:.c=.o)
+FLAGS	= -Wall -Wextra -Werror
+LIBS	= -L./libft -lft -lmlx -framework OpenGL -framework AppKit
 
 $(NAME): $(OBJ)
-	make -C ./libft
-	gcc $(FLAGS) $(OBJ) $(LIBS) -o $(NAME)
+	@echo "Creating $(NAME)"
+	@make -C ./libft
+	@gcc $(FLAGS) $(OBJ) $(LIBS) -o $(NAME)
 
 all: $(NAME)
 
 %.o: %.c
-	gcc $(FLAGS) -o $@ -c $<
+	@echo "Creating object : $@"
+	@gcc $(FLAGS) -o $@ -c $<
 
 clean :
-	rm -f $(OBJ)
-	make -C libft/ clean
+	@echo "Deleting objects"
+	@rm -f $(OBJ)
+	@make -C libft/ clean
 
 fclean: clean
-	rm -rf $(NAME)
-	make fclean -C libft
+	@echo "Deleting $(NAME)"
+	@rm -rf $(NAME)
+	@make fclean -C libft
 
 re: fclean all
 

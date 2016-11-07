@@ -6,11 +6,11 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:27:50 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/28 18:23:45 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/11/07 16:50:06 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/fdf.h"
+#include "../includes/fdf.h"
 
 void	e_empty(char *av, int fd)
 {

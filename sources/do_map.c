@@ -6,11 +6,11 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/28 15:23:58 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/28 18:24:56 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/11/07 16:49:57 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/fdf.h"
+#include "../includes/fdf.h"
 
 void			do_map(t_env *env, t_map *map)
 {

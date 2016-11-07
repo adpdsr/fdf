@@ -6,11 +6,11 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/28 15:13:53 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/28 18:22:51 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/11/07 16:49:50 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/fdf.h"
+#include "../includes/fdf.h"
 
 int		get_color(t_map *map)
 {

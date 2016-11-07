@@ -6,11 +6,11 @@
 /*   By: adu-pelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 15:00:36 by adu-pelo          #+#    #+#             */
-/*   Updated: 2016/03/28 18:24:05 by adu-pelo         ###   ########.fr       */
+/*   Updated: 2016/11/07 16:50:21 by adu-pelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/fdf.h"
+#include "../includes/fdf.h"
 
 static void		e_param(int ac, char **env)
 {
