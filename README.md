@@ -1,6 +1,6 @@
 #fdf
   
-42 shcool project
+Projet Ecole 42 (Paris)
 ..
 ##Synopsis
   
