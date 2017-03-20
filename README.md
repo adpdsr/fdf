@@ -1,12 +1,12 @@
-#fdf
+# fdf
   
 Projet Ecole 42 (Paris)
   
-##Synopsis
+## Synopsis
   
 fdf (pour 'fil de fer') est un projet graphique qui créer une projection isométrique 2D à partir d'un fichier contenant une série de coordonnées (voir dossier maps). Ce programme utilise la librairie graphique OpenGl ainsi qu'une petite librairie propre à l'école (minilibx).
   
-####Evenements disponibles :
+#### Evenements disponibles :
 * + : zoom positif
 * - : zoom negatif
 * 1/2 : changer de perspective
